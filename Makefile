@@ -8,7 +8,7 @@ docker-build:
 	docker --log-level=debug buildx build . \
 		--file build.Dockerfile \
 		--build-arg=CLOUDFLARED_VERSION=$(VERSION) \
-		--platform linux/amd64,linux/arm64,linux/arm/v7
+		--platform linux/amd64,linux/arm64
 
 .PHONY: release
 docker-release:
