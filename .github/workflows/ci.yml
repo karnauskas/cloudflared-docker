@@ -1,13 +1,23 @@
 name: CI
 
 on:
+  workflow_dispatch:
   pull_request:
-    paths:
-      - "build.Dockerfile"
-      - "Makefile"
+    # paths:
+    #   - "build.Dockerfile"
+    #   - "Makefile"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 jobs:
   ci:
+    # strategy:
+    #   matrix:
+    #     platform:
+    #       - linux/amd64
+    #       - linux/arm64
     runs-on: ubuntu-latest
 
     steps:
@@ -18,3 +28,9 @@ jobs:
 
       - name: Build images
         run: make docker-build
+
+      # - name: Build and push
+      #   uses: docker/build-push-action@v6
+      #   with:
+      #     push: true
+      #     tags: karnauskas/cloudflared-docker:latest
