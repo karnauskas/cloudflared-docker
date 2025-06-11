@@ -1,4 +1,4 @@
-FROM --platform=arm64 golang:latest AS builder
+FROM golang:latest AS builder
 
 ARG TARGETPLATFORM
 ARG TARGETOS
